@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "Mordorian Federation",
+    "description": "Unveil the real name of Russia.",
+    "version": "1.0",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["script.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    }
+}
