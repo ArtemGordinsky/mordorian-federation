@@ -38,10 +38,10 @@ var MordorianFederation = function() {
 };
 
 MordorianFederation.prototype.run = function() {
-    this._replaceStrings();
+    this._replaceInTextNodes();
 };
 
-MordorianFederation.prototype._replaceStrings = function() {
+MordorianFederation.prototype._replaceInTextNodes = function() {
     var self = this,
         textNodes = this._getTextNodes(),
         textNodesCount = textNodes.length;
