@@ -43,11 +43,11 @@ MordorianFederation.prototype.init = function() {
 
 MordorianFederation.prototype.run = function() {
     this._replaceInTextNodes();
+    this._replaceInTheTitle();
 };
 
 MordorianFederation.prototype._replaceInTextNodes = function() {
-    var self = this,
-        textNodes = this._getTextNodes(),
+    var textNodes = this._getTextNodes(),
         textNodesCount = textNodes.length;
 
     if (textNodesCount === 0) {
@@ -58,10 +58,7 @@ MordorianFederation.prototype._replaceInTextNodes = function() {
         var node = textNodes[textNodeIterator],
             nodeText = node.textContent;
 
-        node.textContent = nodeText.replace(this._replacementRegex, function(match) {
-            // TODO: preserve the case
-            return self._dictionary[match.toLowerCase()];
-        });
+        node.textContent = this._replaceInString(nodeText)
     }
 };
 
@@ -82,7 +79,9 @@ MordorianFederation.prototype._collectTextNodes = function(element) {
     for (var nodeIterator = 0; nodeIterator < nodeCount; nodeIterator++) {
         var node = nodes[nodeIterator];
         if (node.nodeType === Node.TEXT_NODE) {
-            textNodes.push(node);
+            if (node.textContent.trim().length > 0) {
+                textNodes.push(node);
+            }
         } else {
             textNodes = textNodes.concat(this._collectTextNodes(node));
         }
@@ -95,5 +94,22 @@ MordorianFederation.prototype._replaceInTheTitle = function() {
     var title = document.title;
     document.title = this._replaceInString(title);
 };
+
+MordorianFederation.prototype._replaceInString = function(string) {
+    var self = this;
+    var replacedString = string.replace(this._regex, function(match) {
+        return self._dictionary[match.toLowerCase()];
+    });
+
+    return replacedString;
+};
+
+MordorianFederation.prototype._assembleTheRegex = function() {
+    var regexString = Object.keys(this._dictionary).join('|');
+
+    regexString = regexString.replace(/\s/g, '\\s');
+    this._regex = new RegExp(regexString, 'gi');
+};
+
 var mordorianFederation = new MordorianFederation();
-mordorianFederation.run();mordorianFederation.init().run();
+mordorianFederation.init().run();
