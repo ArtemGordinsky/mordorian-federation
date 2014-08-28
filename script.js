@@ -33,7 +33,8 @@ var MordorianFederation = function() {
         'russian': 'Mordorian',
         'russia': 'Mordor'
     };
-    this._replacementRegex = new RegExp(Object.keys(this._dictionary).join('|').replace(' ', '/\s'), 'gi');
+
+    this._replacementRegex = new RegExp(Object.keys(this._dictionary).join('|').replace(/\s/g, '\\s'), 'gi');
 };
 
 MordorianFederation.prototype.run = function() {
