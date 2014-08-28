@@ -1,5 +1,6 @@
 var MordorianFederation = function() {
     this._textNodes = null;
+    this._regex = null;
     this._dictionary = {
         'россияне': 'Мордоряне',
         'россия': 'Мордор',
@@ -33,8 +34,11 @@ var MordorianFederation = function() {
         'russian': 'Mordorian',
         'russia': 'Mordor'
     };
+};
 
-    this._replacementRegex = new RegExp(Object.keys(this._dictionary).join('|').replace(/\s/g, '\\s'), 'gi');
+MordorianFederation.prototype.init = function() {
+    this._assembleTheRegex();
+    return this;
 };
 
 MordorianFederation.prototype.run = function() {
@@ -88,4 +92,4 @@ MordorianFederation.prototype._collectTextNodes = function(element) {
 };
 
 var mordorianFederation = new MordorianFederation();
-mordorianFederation.run();
+mordorianFederation.run();mordorianFederation.init().run();
