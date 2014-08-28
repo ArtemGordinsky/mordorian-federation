@@ -91,5 +91,9 @@ MordorianFederation.prototype._collectTextNodes = function(element) {
     return textNodes;
 };
 
+MordorianFederation.prototype._replaceInTheTitle = function() {
+    var title = document.title;
+    document.title = this._replaceInString(title);
+};
 var mordorianFederation = new MordorianFederation();
 mordorianFederation.run();mordorianFederation.init().run();
