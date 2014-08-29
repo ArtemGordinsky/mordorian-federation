@@ -105,12 +105,11 @@ MordorianFederation.prototype._translateString = function(string) {
 
     translatedString = string.replace(this._regex, function(match) {
         var translation = self._dictionary[match.toLowerCase()];
-
         // keep first letter's case
         if (match[0] === match[0].toUpperCase()) {
-            translation[0] = translation[0].toUpperCase();
+            translation = translation.charAt(0).toUpperCase() + translation.substring(1);
         } else {
-            translation[0] = translation[0].toLowerCase();
+            translation = translation.charAt(0).toLowerCase() + translation.substring(1);
         }
 
         return translation;
