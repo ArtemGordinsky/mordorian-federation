@@ -42,11 +42,11 @@ MordorianFederation.prototype.init = function() {
 };
 
 MordorianFederation.prototype.run = function() {
-    this._replaceInTextNodes();
-    this._replaceInTheTitle();
+    this._translateTextNodes();
+    this._translateTheTitle();
 };
 
-MordorianFederation.prototype._replaceInTextNodes = function() {
+MordorianFederation.prototype._translateTextNodes = function() {
     var textNodes = this._getTextNodes(),
         textNodesCount = textNodes.length;
 
@@ -58,7 +58,7 @@ MordorianFederation.prototype._replaceInTextNodes = function() {
         var node = textNodes[textNodeIterator],
             nodeText = node.textContent;
 
-        node.textContent = this._replaceInString(nodeText)
+        node.textContent = this._translateString(nodeText)
     }
 };
 
@@ -90,18 +90,29 @@ MordorianFederation.prototype._collectTextNodes = function(element) {
     return textNodes;
 };
 
-MordorianFederation.prototype._replaceInTheTitle = function() {
+MordorianFederation.prototype._translateTheTitle = function() {
     var title = document.title;
-    document.title = this._replaceInString(title);
+    document.title = this._translateString(title);
 };
 
-MordorianFederation.prototype._replaceInString = function(string) {
-    var self = this;
-    var replacedString = string.replace(this._regex, function(match) {
-        return self._dictionary[match.toLowerCase()];
+MordorianFederation.prototype._translateString = function(string) {
+    var self = this,
+        translatedString;
+
+    translatedString = string.replace(this._regex, function(match) {
+        var translation = self._dictionary[match.toLowerCase()];
+
+        // keep first letter's case
+        if (match[0] === match[0].toUpperCase()) {
+            translation[0] = translation[0].toUpperCase();
+        } else {
+            translation[0] = translation[0].toLowerCase();
+        }
+
+        return translation;
     });
 
-    return replacedString;
+    return translatedString;
 };
 
 MordorianFederation.prototype._assembleTheRegex = function() {
